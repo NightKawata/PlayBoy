@@ -1,8 +1,4 @@
---[[
-	Playboy's Chat class.
-	Don't worry, it's really a way to connect to an IRC server.
---]]
-
+-- "Chat" API: aka how PlayBoy connects to the IRC server and interacts with it.
 local Class = require("playboy.class")
 local Socket = require("socket") -- We'll need some good old socket action
 local Chat = Class("PlayBoy Chat") -- Oh, and some good ol' PlayBoy Chat action.
@@ -32,13 +28,13 @@ function Chat:connect(server, port)
 end
 
 function Chat:getStats()
-	-- Returns bytes received, sent, and the socket object's age.
+	-- Returns bytes received, sent, and the socket object's age (in seconds).
 	if not self.tcp then return end
 	return self.tcp:getstats()
 end
 
 function Chat:sendCommand(command, message)
-	-- Sends a command to the server.
+	-- Sends a command to the server, with a message.
 	if not self.tcp then return end
 	self.tcp:send(command .. " " .. (message or "") .. "\r\n")
 end
@@ -58,13 +54,13 @@ function Chat:operate()
 	-- RECEIVES MESSAGES
 	local message, err = self.tcp:receive("*l")
 	if message then
-		-- Right now it only gets the raw message.
+		-- Right now it only gets the raw message. That's probably a good idea to update.
 		print(message)
 	end
 end
 
 function Chat:close()
-	-- Called when PlayBoy is done.
+	-- Called to close up the chat, if you catch my drift.
 	if self.tcp then self.tcp:close() end
 end
 
