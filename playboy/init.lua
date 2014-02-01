@@ -1,6 +1,7 @@
 -- READ SOME PLAYBOY, KID
-local Class = require("playboy.class") -- NOT BY ME
-local Chat = require("playboy.chat")
+local ROOT_PATH = (...)
+local Class = require(ROOT_PATH .. ".class") -- NOT BY ME
+local Chat  = require(ROOT_PATH .. ".chat")
 local Playboy = Class("PlayBoy Client")
 -- Now that all that's over with, let's make some magic
 
