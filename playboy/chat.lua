@@ -1,5 +1,6 @@
 -- "Chat" API: aka how PlayBoy connects to the IRC server and interacts with it.
-local Class = require("playboy.class")
+local ROOT_PATH = (...):match('(.+)%.%w+$')
+local Class  = require(ROOT_PATH ..".class")
 local Socket = require("socket") -- We'll need some good old socket action
 local Chat = Class("PlayBoy Chat") -- Oh, and some good ol' PlayBoy Chat action.
 
