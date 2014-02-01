@@ -4,18 +4,6 @@ local Class  = require(ROOT_PATH ..".class")
 local Socket = require("socket") -- We'll need some good old socket action
 local Chat = Class("PlayBoy Chat") -- Oh, and some good ol' PlayBoy Chat action.
 
-function string:split(delimiter) --Not by me (SOMEONE IMPROVE THIS IT'S A GLOBAL FUNCTION AND THAT NEEDS TO CHANGE)
-	local result = {}
-	local from  = 1
-	local delim_from, delim_to = string.find( self, delimiter, from  )
-	while delim_from do
-		table.insert( result, string.sub( self, from , delim_from-1 ) )
-		from = delim_to + 1
-		delim_from, delim_to = string.find( self, delimiter, from  )
-	end
-	table.insert( result, string.sub( self, from  ) )
-	return result
-end
 
 function Chat:connect(server, port)
 	self.tcp = Socket.tcp()
