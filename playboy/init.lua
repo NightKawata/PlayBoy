@@ -5,13 +5,14 @@ local Chat  = require(ROOT_PATH .. ".chat")
 local Playboy = Class("PlayBoy Client")
 -- Now that all that's over with, let's make some magic
 
-function Playboy:initialize(server, port, nickname, username, realname)
+function Playboy:initialize(server, port, nickname, username, realname, channel)
 	-- If any of this stuff isn't defined, it won't matter
 	self:setServer(server)
 	self:setPort(port)
 	self:setNickname(nickname)
 	self:setUsername(username)
 	self:setRealname(realname)
+	self:setChannel(channel)
 	
 	-- Oh and we probably need this
 	self.chat = Chat:new()
@@ -38,13 +39,22 @@ function Playboy:setRealname(realname)
 	self.realname = realname or "PlayBoy X" -- GTA IV reference, get!
 end
 
+function Playboy:setChannel(channel)
+	self.channel = channel or "#playboy" -- The mansion
+end
+
+function Playboy:sendMessage(message)
+	if not self.chat then return end
+	self.chat:sendChatMessage(self.channel, message)
+end
+
 function Playboy:connect()
 	-- Now THIS is what you want to run to begin PlayBoy. We'll need to set up the Chat as well.
 	if not self.chat then return end -- I don't know why this wouldn't exist (hackers), but hey
 	self.chat:connect(self.server, self.port)
 	self.chat:sendCommand("NICK", self.nickname)
 	self.chat:sendCommand("USER", self.username .. " 8 * :" .. self.realname)
-	self.chat:joinChannel("#playboy")
+	self.chat:joinChannel(self.channel)
 	self.chat:setTimeout()
 end
 

@@ -28,9 +28,18 @@ function Chat:sendCommand(command, message)
 	self.tcp:send(command .. " " .. (message or "") .. "\r\n")
 end
 
+function Chat:sendChatMessage(channel, message)
+	self.tcp:send("PRIVMSG " .. channel .. " :" .. (message or "") .. "\r\n")
+end
+
 function Chat:joinChannel(channel)
 	-- If it's able to, sends the JOIN command. It's pretty much a shortcut.
 	self:sendCommand("JOIN", channel or "#love") -- Now I'm really making things blatant!
+end
+
+function Chat:receiveMessage(flag)
+	if not self.tcp then return end
+	return self.tcp:receive(flag or "*l")
 end
 
 function Chat:setTimeout(timeout)
@@ -41,7 +50,7 @@ end
 
 function Chat:operate()
 	-- RECEIVES MESSAGES
-	local message, err = self.tcp:receive("*l")
+	local message, err = self:receiveMessage()
 	if message then
 		-- Right now it only gets the raw message. That's probably a good idea to update.
 		print(message)
