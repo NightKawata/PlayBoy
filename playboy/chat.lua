@@ -1,17 +1,17 @@
 -- "Chat" API: aka how PlayBoy connects to the IRC server and interacts with it.
 local ROOT_PATH = (...):match('(.+)%.%w+$')
+local __CAN_PRINT = true -- If true, it can print to the console.
 local Class  = require(ROOT_PATH ..".class")
 local Socket = require("socket") -- We'll need some good old socket action
 local Chat = Class("PlayBoy Chat") -- Oh, and some good ol' PlayBoy Chat action.
-
 
 function Chat:connect(server, port)
 	self.tcp = Socket.tcp()
 	local ok = self.tcp:connect(server, port)
 	
-	if ok == 1 then
+	if ok == 1 and __CAN_PRINT then
 		print(">Connected to " .. server .. "!")
-	else
+	elseif __CAN_PRINT then
 		print(">Cannot connect to " .. server .. ".")
 	end
 end
@@ -53,7 +53,18 @@ function Chat:operate()
 	local message, err = self:receiveMessage()
 	if message then
 		-- Right now it only gets the raw message. That's probably a good idea to update.
-		print(message)
+		if __CAN_PRINT then 
+			if string.find(message, "PRIVMSG") then
+				-- Regular message/PM
+				local nickstart, nickfin = message:find("[:]^%w+[!]?")
+				print(nickstart, nickfin)
+				if nickstart and nickfin then
+					print(string.sub(message, nickstart, nickfin))
+				end
+			else
+			
+			end
+		end
 	end
 end
 

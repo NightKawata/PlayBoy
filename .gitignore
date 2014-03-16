@@ -150,6 +150,9 @@ ClientBin/
 *.[Pp]ublish.xml
 *.pfx
 *.publishsettings
+# Sublime Text 2 stuff
+*.sublime-project
+*.sublime-workspace
 
 # RIA/Silverlight projects
 Generated_Code/

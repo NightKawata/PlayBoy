@@ -28,18 +28,22 @@ function Playboy:setPort(port)
 end
 
 function Playboy:setNickname(nickname)
-	self.nickname = nickname or "PlayBoy_Client"
+	-- Sets the nickname (aka what most people see when you join the channel)
+	self.nickname = nickname or "PlayBoy_Client" .. math.random(1,255)
 end
 
 function Playboy:setUsername(username)
+	-- Sets the username when connecting.
 	self.username = username or "PlayBoy" -- There are no masked men
 end
 
 function Playboy:setRealname(realname)
+	-- Sets the realname.
 	self.realname = realname or "PlayBoy X" -- GTA IV reference, get!
 end
 
 function Playboy:setChannel(channel)
+	-- Sets PlayBoy's channel.
 	self.channel = channel or "#playboy" -- The mansion
 end
 

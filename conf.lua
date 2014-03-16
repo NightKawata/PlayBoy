@@ -4,6 +4,6 @@ function love.conf(t)
 	t.console=true
 	t.modules.physics=false
 	t.modules.joystick = false
-	t.modules.graphics = false
-	t.modules.window = false
+	--t.modules.graphics = false
+	--t.modules.window = false
 end
